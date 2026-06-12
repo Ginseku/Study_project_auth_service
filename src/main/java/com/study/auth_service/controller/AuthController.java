@@ -1,6 +1,8 @@
 package com.study.auth_service.controller;
 
+import com.study.auth_service.DTO.request.RegisterRequest;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @PostMapping("/register")
-    public String registerUser(){
+    public String registerUser(@RequestBody RegisterRequest request){
         return "register";
     }
 
