@@ -13,4 +13,9 @@ public class AuthController {
         return "register";
     }
 
+    @PostMapping("/login")
+    public String loginUser(){
+        return "logged";
+    }
+
 }
