@@ -1,13 +1,12 @@
 package com.study.auth_service.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import lombok.*;
 
 import java.time.LocalDateTime;
-@Getter
-@Setter
+
+@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
