@@ -2,10 +2,7 @@ package com.study.auth_service.controller;
 
 import com.study.auth_service.DTO.request.LoginRequest;
 import com.study.auth_service.DTO.request.RegisterRequest;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,4 +18,8 @@ public class AuthController {
         return "logged";
     }
 
+    @GetMapping("/me")
+    public String getMe(){ //get Bearer token for get "ME"
+        return "me";
+    }
 }
