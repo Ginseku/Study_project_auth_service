@@ -2,6 +2,7 @@ package com.study.auth_service.controller;
 
 import com.study.auth_service.DTO.request.LoginRequest;
 import com.study.auth_service.DTO.request.RegisterRequest;
+import com.study.auth_service.DTO.response.LoginResponse;
 import com.study.auth_service.DTO.response.RegisterResponse;
 import com.study.auth_service.service.AuthService;
 import com.study.auth_service.service.AuthServiceImpl;
@@ -25,8 +26,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody LoginRequest request){
-        return "logged";
+    public LoginResponse loginUser(@RequestBody LoginRequest request) {
+        return authServiceImpl.loginUser(request);
     }
 
     @GetMapping("/me")

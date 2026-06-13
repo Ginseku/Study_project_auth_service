@@ -1,6 +1,8 @@
 package com.study.auth_service.service;
 
+import com.study.auth_service.DTO.request.LoginRequest;
 import com.study.auth_service.DTO.request.RegisterRequest;
+import com.study.auth_service.DTO.response.LoginResponse;
 import com.study.auth_service.Entity.User;
 import com.study.auth_service.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,10 +15,12 @@ public class AuthServiceImpl implements AuthService{
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
 
@@ -31,5 +35,20 @@ public class AuthServiceImpl implements AuthService{
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
+    }
+
+    @Override
+    public LoginResponse loginUser(LoginRequest request) {
+
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new RuntimeException("Invalid password");
+        }
+
+        String token = jwtService.generateToken(user.getId(), user.getEmail());
+
+        return new LoginResponse(token);
     }
 }
