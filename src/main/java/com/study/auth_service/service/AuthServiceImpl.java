@@ -3,6 +3,7 @@ package com.study.auth_service.service;
 import com.study.auth_service.DTO.request.RegisterRequest;
 import com.study.auth_service.Entity.User;
 import com.study.auth_service.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,9 +12,11 @@ import java.time.LocalDateTime;
 public class AuthServiceImpl implements AuthService{
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthServiceImpl(UserRepository userRepository) {
+    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -25,7 +28,7 @@ public class AuthServiceImpl implements AuthService{
         }
         User user = new User();
         user.setEmail(request.email());
-        user.setPassword(request.password());
+        user.setPassword(passwordEncoder.encode(request.password()));
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
     }
